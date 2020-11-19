@@ -12,7 +12,7 @@ const generateItemElement = function (item) {
   let itemTitle = `<span class='shopping-item shopping-item__checked'>${item.name}</span>`;
   if (!item.checked) {
     itemTitle = `
-     <span class='shopping-item'>${item.name}</span>
+     <input type"text" class='shopping-item' value="${item.name}"></input>
     `;
   }
 
@@ -66,6 +66,12 @@ const addItemToShoppingList = function (itemName) {
   store.items.push({ id: cuid(), name: itemName, checked: false });
 };
 
+const replaceItemName = function (itemID, newItemName) {
+  const idx = store.items.findIndex(item => item.id === itemID)
+  store.items[idx].name = newItemName
+  console.log(store.items[idx])
+}
+
 const handleNewItemSubmit = function () {
   $('#js-shopping-list-form').submit(function (event) {
     event.preventDefault();
@@ -73,6 +79,15 @@ const handleNewItemSubmit = function () {
     $('.js-shopping-list-entry').val('');
     addItemToShoppingList(newItemName);
     render();
+  });
+};
+
+const handleNameInputChange = function () {
+  $('.js-shopping-list').on('input', '.shopping-item',function (event) {
+    event.preventDefault()
+    const newItemName = $(this).val();
+    const itemID = getItemIdFromElement(this)
+    replaceItemName(itemID, newItemName);
   });
 };
 
@@ -160,6 +175,7 @@ const handleShoppingList = function () {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleToggleFilterClick();
+  handleNameInputChange();
 };
 
 // when the page loads, call `handleShoppingList`
