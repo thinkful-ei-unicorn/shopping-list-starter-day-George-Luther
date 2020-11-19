@@ -9,10 +9,10 @@ const store = {
 };
 
 const generateItemElement = function (item) {
-  let itemTitle = `<span class='shopping-item shopping-item__checked'>${item.name}</span>`;
+  let itemTitle = `<input type="text" class='shopping-item shopping-item__checked' value="${item.name}"></input>`;
   if (!item.checked) {
     itemTitle = `
-     <input type"text" class='shopping-item' value="${item.name}"></input>
+     <input type="text" class='shopping-item' value="${item.name}"></input>
     `;
   }
 
